@@ -1,0 +1,87 @@
+Loading Pre-trained Word Vectors and Visualizing Similar Words
+In this guide, we'll load pre-trained word vectors, store them in a vector index, look up similar words, and visualize the results. We'll use pre-trained word vectors from FastText.
+
+Step-by-Step Guide
+Download Pre-trained Word Vectors
+Extract the Word Vectors
+Load the Word Vectors into Memory
+Store the Vectors in a Vector Index
+Lookup Similar Words
+Visualize Similar Words
+
+1. Download Pre-trained Word Vectors
+First, we need to download the pre-trained word vectors. We'll use the wget command to download the FastText vectors.
+
+python
+Copy code
+!wget https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M.vec.zip
+2. Extract the Word Vectors
+After downloading, we'll unzip the file to access the .vec file containing the word vectors.
+
+python
+Copy code
+!unzip wiki-news-300d-1M.vec.zip
+3. Load the Word Vectors into Memory
+We'll use the gensim library to load the word vectors. Gensim is a popular library for natural language processing.
+
+python
+Copy code
+import gensim
+
+# Load the word vectors
+model = gensim.models.KeyedVectors.load_word2vec_format('wiki-news-300d-1M.vec', binary=False)
+4. Store the Vectors in a Vector Index
+To efficiently look up similar words, we can store the vectors in an index. We'll use the Annoy library for this purpose. Annoy (Approximate Nearest Neighbors Oh Yeah) is a library that provides fast approximate nearest neighbor searches.
+
+python
+Copy code
+from annoy import AnnoyIndex
+
+# Create an Annoy index
+vector_size = 300  # The vectors are 300-dimensional
+index = AnnoyIndex(vector_size, 'angular')
+
+# Add vectors to the index
+for i, word in enumerate(model.index_to_key):
+    index.add_item(i, model[word])
+
+# Build the index
+index.build(10)  # 10 trees
+5. Lookup Similar Words
+We can now look up similar words using the Annoy index.
+
+python
+Copy code
+def get_similar_words(word, top_n=10):
+    word_id = model.key_to_index[word]
+    similar_word_ids = index.get_nns_by_item(word_id, top_n)
+    return [model.index_to_key[id] for id in similar_word_ids]
+
+# Example usage
+similar_words = get_similar_words('king')
+print(similar_words)
+6. Visualize Similar Words
+Finally, we'll visualize the similar words using matplotlib and sklearn.manifold.TSNE to reduce the dimensions of the vectors for plotting.
+
+python
+Copy code
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+
+def visualize_similar_words(word):
+    similar_words = get_similar_words(word)
+    word_vectors = [model[word]] + [model[w] for w in similar_words]
+    
+    tsne = TSNE(n_components=2)
+    word_vectors_2d = tsne.fit_transform(word_vectors)
+    
+    plt.figure(figsize=(10, 10))
+    plt.scatter(word_vectors_2d[:, 0], word_vectors_2d[:, 1], edgecolors='k', c='r')
+    
+    for i, word in enumerate([word] + similar_words):
+        plt.text(word_vectors_2d[i, 0], word_vectors_2d[i, 1], word)
+    
+    plt.show()
+
+# Example usage
+visualize_similar_words('king')
