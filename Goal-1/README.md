@@ -1,53 +1,70 @@
-GOAL 1  - Load word vectors from FastText and explore similar words. Use Annoy or plain NumPy. Plot similar words. Generate your own word vectors on a specific dataset.
-DUE: 26/June/2024
-Deliverable: Notebook in your Github repository that showcases your work related to this task.
+# Project README
 
-Reading
-papers
-https://arxiv.org/pdf/1301.3781v3 
-https://nlp.stanford.edu/pubs/glove.pdf 
-blogs
-https://making.lyst.com/2014/11/11/word-embeddings-for-fashion/
-https://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/
-https://stackoverflow.blog/2023/11/09/an-intuitive-introduction-to-text-embeddings/
+## Goal 1: Word Vectors Exploration and Application
 
-Data
-A collection of pre-trained word vectors can be found here https://fasttext.cc/docs/en/english-vectors.html and https://nlp.stanford.edu/projects/glove/
+### Task Description
+- Load word vectors from FastText and explore similar words using Annoy or NumPy.
+- Plot similar words and generate your own word vectors on a specific dataset.
 
-Code 
-Working with Text https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html
-Nearest Neighbors https://scikit-learn.org/stable/modules/neighbors.html#neighbors
-Word2Vec https://radimrehurek.com/gensim/
-Loading word vectors https://github.com/blester125/word-vectors
-Annoy https://github.com/spotify/annoy
-This Kaggle Notebook https://www.kaggle.com/code/pierremegret/gensim-word2vec-tutorial shows how you can use Gensim to train your own word embeddings.
+### Due Date
+- 26th June 2024
 
-End to end Kaggle notebook to load fasttext vectors, index them and visualize them 
-https://www.kaggle.com/code/harshsinghal/rit-bootcamp-june-2024-goal-1
+### Deliverable
+- Notebook in your GitHub repository that showcases your work related to this task.
 
-Raw Data
-AWS Case Studies Dataset https://www.kaggle.com/datasets/harshsinghal/aws-case-studies-and-blogs
+## Resources
 
-Google Cloud Case Studies Dataset (case study files from 1600+ customers on how they use various Google Cloud Services)
-https://www.kaggle.com/datasets/harshsinghal/google-cloud-customer-case-studies/data
+### Reading
+- **Papers:**
+  - [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/pdf/1301.3781v3)
+  - [GloVe: Global Vectors for Word Representation](https://nlp.stanford.edu/pubs/glove.pdf)
+  
+- **Blogs:**
+  - [Word Embeddings for Fashion](https://making.lyst.com/2014/11/11/word-embeddings-for-fashion/)
+  - [A Word is Worth a Thousand Vectors](https://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/)
+  - [An Intuitive Introduction to Text Embeddings](https://stackoverflow.blog/2023/11/09/an-intuitive-introduction-to-text-embeddings/)
 
-Ideas
-Can you extract keywords and named entities from the AWS case studies? What interesting visuals can you show on similar words from the AWS case studies dataset. 
-Which companies are using what AWS technologies and how?
+### Data
+- A collection of pre-trained word vectors:
+  - [FastText](https://fasttext.cc/docs/en/english-vectors.html)
+  - [GloVe](https://nlp.stanford.edu/projects/glove/)
+- **Code:**
+  - [Working with Text Data in scikit-learn](https://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html)
+  - [Nearest Neighbors in scikit-learn](https://scikit-learn.org/stable/modules/neighbors.html#neighbors)
+  - [Word2Vec in Gensim](https://radimrehurek.com/gensim/)
+  - [Loading Word Vectors](https://github.com/blester125/word-vectors)
+  - [Annoy Library](https://github.com/spotify/annoy)
+- **Kaggle Notebook:** [Gensim Word2Vec Tutorial](https://www.kaggle.com/code/pierremegret/gensim-word2vec-tutorial)
 
-Using pre-trained word embeddings can you create a sentiment classification model? 
-https://www.kaggle.com/datasets/ahmedabdulhamid/reviews-dataset
-See https://arxiv.org/pdf/1607.01759
+### End-to-End Example
+- [Kaggle Notebook to Load FastText Vectors](https://www.kaggle.com/code/harshsinghal/rit-bootcamp-june-2024-goal-1)
 
-Approach
-For each review in the Positive reviews dataset, break up the review into words.
-For each word, extract the embedding vector from fasttext
-At the review level, average the embeddings for all the words contained in the review.
-Now you have a single vector for a review in the Positives reviews dataset.
-Repeat steps 1 to 4 for the negative reviews dataset.
-Now you have vectors and a label (positive or negative).
-Apply KNN classification.
-Train a simple classifier - logistic regression, random forest, xgboost use scikit-learn for these algorithms
-For the reviews in the test dataset, apply the per word embedding lookup and average and score the review using the trained classifier in step 7.
-Plot ROC curve to identify a suitable cut-off that will give you the best performance (tradeoff between precision and recall). 
-Train a simple fully connected neural network using Keras for the above classification task and evaluate performance.
+### Raw Data
+- **AWS Case Studies Dataset:** [AWS Case Studies and Blogs](https://www.kaggle.com/datasets/harshsinghal/aws-case-studies-and-blogs)
+- **Google Cloud Case Studies Dataset:** [Google Cloud Customer Case Studies](https://www.kaggle.com/datasets/harshsinghal/google-cloud-customer-case-studies/data)
+
+## Ideas for Exploration
+- Extract keywords and named entities from the AWS case studies.
+- Visualize similar words from the AWS case studies dataset.
+- Analyze which companies are using specific AWS technologies and how they are using them.
+
+## Additional Tasks
+- Create a sentiment classification model using pre-trained word embeddings:
+  - Dataset: [Reviews Dataset](https://www.kaggle.com/datasets/ahmedabdulhamid/reviews-dataset)
+  - Reference: [A Supervised Approach to Sentiment Analysis](https://arxiv.org/pdf/1607.01759)
+
+### Approach
+1. For each review in the Positive reviews dataset, break it into words.
+2. Extract the embedding vector from FastText for each word.
+3. Average the embeddings to get a single vector for each positive review.
+4. Repeat steps 1-3 for the negative reviews dataset.
+5. Apply KNN classification.
+6. Train simple classifiers (e.g., logistic regression, random forest, xgboost) using scikit-learn.
+7. For reviews in the test dataset, apply per-word embedding lookup and average.
+8. Score the review using the trained classifier.
+9. Plot ROC curve to find the best performance cutoff (precision vs. recall tradeoff).
+10. Train a simple fully connected neural network using Keras for the classification task and evaluate performance.
+
+---
+
+This README provides a structured overview of your project's goals, resources, datasets, and the approach you plan to take. Make sure to update it as you progress and achieve milestones in your project.
